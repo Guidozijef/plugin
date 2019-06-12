@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>轮播图插件</title>
+  <link rel="stylesheet" href="./css//reset.min.css">
+  <link rel="stylesheet" href="./css/swiper.css">
+
+</head>
+
+<body>
+  <div class="swiper-container">
+    <div class="swiper-wrapper" id="swiper-wrapper">
+      <div class="swiper-slide"><img src="./images//nemo.jpg" alt=""></div>
+      <div class="swiper-slide"><img src="./images//toystory.jpg" alt=""></div>
+      <div class="swiper-slide"><img src="./images//up.jpg" alt=""></div>
+      <div class="swiper-slide"><img src="./images//walle.jpg" alt=""></div>
+    </div>
+    <div class="swiper-button">
+      <div class="swiper-button-prev"><</div>
+      <div class="swiper-button-next">></div>
+    </div>
+    <div class="swiper-pagination">
+      <span class="active"></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+</body>
+<script src="./js/swiper.js"></script>
+<script>
+  window.onload = function () {
+    new Swiper(".swiper-container", {
+      time: 5000,
+      callback: function (self, index) {
+        // console.log(self,index);
+      }
+    });
+  }
+</script>
+
+</html>

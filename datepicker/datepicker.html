@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>calendar</title>
+    <link rel="stylesheet" href="./datepicker.css">
+    <script src="./datepicker.js"></script>
+    <style>
+        html {
+            height: 100%;
+        }
+        body {
+            height: 2000px;
+        }
+        .calendar-item {
+            position: absolute;
+            height: 30px;
+            width: 200px;
+            padding-left: 10px;
+            line-height: 28px;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="left:20%;top: 30%;" class="calendar-item">calendar-item</div>
+    <div style="left:60%;top: 60%;" class="calendar-item">calendar-item</div>
+</body>
+<script>
+    Calendar.create({
+        classN: 'calendar-item',
+        callBack: function(bindElem, dateObj) {
+            bindElem.innerHTML = dateObj.year + '-' + dateObj.month + '-' + dateObj.date;
+        }
+    })
+</script>
+</html>
