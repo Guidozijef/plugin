@@ -40,16 +40,17 @@
     this.buttonNext = this.container.querySelector(".swiper-button-next");
     this.buttonPrev = this.container.querySelector(".swiper-button-prev");
     this.pagination = this.container.querySelectorAll(".swiper-pagination span");
-    this.Init();
+    this.init();
   }
 
   Swiper.prototype = {
-    Init: function () {
+    constructor: Swiper,
+    init: function () {
       // 克隆第一张图片放到最后面，实现无缝衔接
       var cloneImgFirst = this.swiperSilder[0].cloneNode(true);
-      this.swiperWapper.appendChild(cloneImgFirst);
-      // 克隆最后一张放在最前面
+      // 克隆最后一张放在最前面,先克隆在插入进去，不然克隆的最后一张就是第一张
       var cloneImgLast = this.swiperSilder[this.swiperSilder.length - 1].cloneNode(true);
+      this.swiperWapper.appendChild(cloneImgFirst);
       this.swiperWapper.insertBefore(cloneImgLast, this.swiperSilder[0]);
       // 重新设置容器的宽度，多了一张图片了，不过swiperSilder.length会自动变更
       this.swiperWapper.style.width = (this.swiperSilder.length) * this.WIDTH + "px";
@@ -76,27 +77,14 @@
         _this.buttonPrev.style.opacity = 0;
       }
       // 利用改变点击事件中的this，因为不是立马执行，所以此处用的bind而不用call
-      this.buttonNext.onclick = this.Next.bind(this);
-      this.buttonPrev.onclick = this.Prev.bind(this);
-      for (let i = 0; i < [].slice.call(this.pagination).length; i++) {
-        let element = [].slice.call(this.pagination)[i];
-        element.onclick = function () {
-          _this.swiperWapper.style.transition = "all 0.5s ease-in";
-          _this.swiperWapper.style.left = -(_this.WIDTH * (i + 1)) + "px";
-          for (let j = 0; j < [].slice.call(_this.pagination).length; j++) {
-            let ele = [].slice.call(_this.pagination)[j];
-            if(ele != this){
-              util.removeClass(ele, "active");
-              util.addClass(this, "active");
-            }
-          }
-        }
-      }
+      this.buttonNext.onclick = this.next.bind(this);
+      this.buttonPrev.onclick = this.prev.bind(this);
+      this.changeFocus(this);
     },
     autoPlay: function () {
-      this.Next();
+      this.next();
     },
-    Next: function () {
+    next: function () {
       // 获取容器的left值
       var wapperLeft = this.swiperWapper.offsetLeft;
       // 如果到最后一张图片就马上跳到第一张
@@ -120,7 +108,7 @@
         index == i + 1 ? util.addClass(element, "active") : util.removeClass(element, "active");
       }
     },
-    Prev: function () {
+    prev: function () {
       // 获取容器的left值
       var wapperLeft = this.swiperWapper.offsetLeft;
       // 如果到最后一张图片就马上跳到第一张
@@ -142,6 +130,22 @@
       for (let i = 0; i < [].slice.call(this.pagination).length; i++) {
         let element = [].slice.call(this.pagination)[i];
         index == i + 1 ? util.addClass(element, "active") : util.removeClass(element, "active");
+      }
+    },
+    changeFocus: function (_this) {
+      for (let i = 0; i < [].slice.call(_this.pagination).length; i++) {
+        let element = [].slice.call(_this.pagination)[i];
+        element.onclick = function () {
+          _this.swiperWapper.style.transition = "all 0.5s ease-in";
+          _this.swiperWapper.style.left = -(_this.WIDTH * (i + 1)) + "px";
+          for (let j = 0; j < [].slice.call(_this.pagination).length; j++) {
+            let ele = [].slice.call(_this.pagination)[j];
+            if (ele != this) {
+              util.removeClass(ele, "active");
+              util.addClass(this, "active");
+            }
+          }
+        }
       }
     }
   }
